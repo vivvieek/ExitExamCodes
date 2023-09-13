@@ -1,0 +1,73 @@
+<!-- Form to Input To do -->
+<form class="mx-auto col-10 col-md-8 col-lg-6" (ngSubmit)="submit()">
+    <!-- #addmess="ngForm" -->
+    <div class="form-group ">
+      <label for="addtodo" class="text-primary">Enter To do Detail</label>
+      <input type="text" class="form-control" id="addtodo" placeholder="Message..." name="todolist" [(ngModel)]="todo.todolist" #todolist="ngModel" >
+      <br>
+        <div class="form-group">
+        <select id="course" class="form-select item" name="course" required [(ngModel)]="todo.status">
+            <option value="" disabled selected>Status</option>
+            <option>Completed</option>
+            <option>Ongoing</option>
+        </select>
+        </div>
+    </div>
+    <br>
+      <button type="submit" class="button-86"><i class="bi bi-plus-circle"> Add</i></button>
+</form>
+
+<!-- Display of to do -->
+<p class="lead text-center">
+    To Do List
+</p>
+
+<div class="oldnotimess mx-auto col-10 col-md-8 col-lg-6">
+    <ul class="list-group listing">
+        <li class="nav-item dropdown text-center  list-unstyled">
+            <a class="nav-link dropdown-toggle text-center"  role="button" data-bs-toggle="dropdown" aria-expanded="false">Sort</a>
+            <ul class="dropdown-menu ">
+              <li><a class="dropdown-item" (click)="completed()">Completed</a></li>
+              <li><a class="dropdown-item" (click)="ongoing()">Ongoing</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="all()">All</a></li>
+            </ul>
+        </li>
+        <div *ngIf="isall">
+            <li class="list-group-item list-group-item-action" *ngFor="let item of todos">
+                <i class="bi bi-bell">{{ item.todolist }}</i>
+                <div class="form-check">
+                   <input class="form-check-input" type="checkbox" [value]="item.status === 'Completed'" id="flexCheckDefault" [checked]="item.status === 'Completed'">
+                   <label class="form-check-label" for="flexCheckDefault">Click if Completed</label>
+                   <a (click)="deltodo(item._id)" class="float-end"><i class="bi bi-calendar2-x"></i> Delete</a>
+                </div>
+            </li>
+        </div>
+
+        <div *ngIf="isongoing">
+            <li class="list-group-item list-group-item-action" *ngFor="let item of todos" >
+                <div *ngIf="item.status==='Ongoing'">
+                    <i class="bi bi-bell">{{ item.todolist }}</i>
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="item.status === 'Completed'" id="flexCheckDefault" [checked]="item.status === 'Completed'">
+                    <label class="form-check-label" for="flexCheckDefault">Click if Completed</label>
+                    <a (click)="deltodo(item._id)" class="float-end"><i class="bi bi-calendar2-x"></i> Delete</a>
+                    </div>
+                </div>
+            </li>
+        </div>
+
+        <div *ngIf="iscompleted">
+            <li class="list-group-item list-group-item-action" *ngFor="let item of todos">
+                <div *ngIf="item.status==='Completed'">
+                    <i class="bi bi-bell">{{ item.todolist }}</i>
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [value]="item.status === 'Completed'" id="flexCheckDefault" [checked]="item.status === 'Completed'">
+                    <label class="form-check-label" for="flexCheckDefault">Click if Completed</label>
+                    <a (click)="deltodo(item._id)" class="float-end"><i class="bi bi-calendar2-x"></i> Delete</a>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
